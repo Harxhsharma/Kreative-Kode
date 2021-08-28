@@ -1,0 +1,223 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+       
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto";
+    font-size: 14px;
+    background-size: 200% 100% !important;
+    animation: move 10s ease infinite;
+    transform: translate3d(0, 0, 0);
+    background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+    height: 100vh
+}
+
+.user {
+    width: 90%;
+    max-width: 340px;
+    margin: 10vh auto;
+}
+
+.user__header {
+    text-align: center;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.7s forwards;
+}
+
+.user__title {
+    font-size: 14px;
+    margin-bottom: -10px;
+    font-weight: 500;
+    color: white;
+}
+
+.form {
+    margin-top: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.9s forwards;
+}
+
+.form--no {
+    animation: NO 1s ease-in-out;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.form__input {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-family: "Roboto";
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+    
+    &:focus {
+        background: darken(#fff, 3%);
+    }
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-family: "Roboto";
+    -webkit-appearance: none;
+    outline: 0;
+    border: 0;
+    color: white;
+    background: #ABA194;
+    transition: 0.3s;
+    
+    &:hover {
+        background: darken(#ABA194, 5%);
+    }
+}
+
+@keyframes NO {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes arrive {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0
+    }
+
+    50% {
+        background-position: 100% 0
+    }
+
+    100% {
+        background-position: 0 0
+    }
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .container .image {
+    width: 50%;
+  }
+  
+  .container img {
+    width: calc(100% - (10px * 2));
+    margin: 10px;
+  }
+ 
+
+    </style>
+    <script>
+        function reply_click(clicked_id)
+        {
+            var input = document.getElementById("txt").innerHTML;
+            document.getElementById("txt").innerHTML=input + clicked_id;
+            document.getElementById("show").value=document.getElementById("txt").innerHTML
+            console.log(document.getElementById("show").value)
+
+        }
+        function dell(){
+            var input = document.getElementById("txt").innerHTML="";
+            document.getElementById("show").value="";
+            
+        }
+    </script>
+</head>
+<body>
+    
+    
+
+        <div class="user">
+            <header class="user__header">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+                <h1 class="user__title">Login form</h1>
+            </header>
+            
+            <form class="form" action="login" method='post'>
+                {% csrf_token %}
+                <div class="form__group">
+                    <input type="text" name="username" placeholder="Username" class="form__input" />
+                </div>
+                <div class="form__group">
+                    <input type="hidden" id ="show" name="Last_nme" placeholder="Last_name" class="form__input" />
+                </div>
+                <div class="form__group">
+                    <input type="password" name="password" placeholder="Password" class="form__input" />
+                </div>
+                <div class="container">
+                    <div class="image">
+                      <img id="Desert" src="{% static 'images/auth4.jpg' %}" onclick="reply_click(this.id)" />
+                    </div>
+                    <div class="image">
+                      <img id="River" src="{% static 'images/auth3.jpg' %}" onclick="reply_click(this.id)" />
+                    </div>
+                    <div class="image">
+                      <img id="Dog" src="{% static 'images/auth2.jpg' %}" onclick="reply_click(this.id)"/>
+                    </div>
+                    <div class="image">
+                      <img id="Cat" src="{% static 'images/auth1.jpg' %} " onclick="reply_click(this.id)" />
+                    </div>
+                  </div>
+
+                 
+                    <p type="hidden" name="pd" id="txt" hidden></p>
+                    
+
+                    
+                  
+
+                <input type="submit" >
+                <button type="button"  onclick="dell()">Reset here</button>
+            </form>
+        </div>
+        <div style="text-align: center;" >
+            {% for mesg in messages%}   
+            <h1 style="font-family: Roboto;">{{mesg}}</h1>
+            {% endfor %}
+            </div>
+</body>
+</html>
